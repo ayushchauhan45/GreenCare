@@ -10,6 +10,7 @@ import retrofit2.http.Query
 interface PlantApi {
     @GET("api/species-list")
     suspend fun getPlant(
+        @Query("q") q:String,
         @Query("key") apiKey: String = API_KEY
     ): Response<PlantResponse>
 
