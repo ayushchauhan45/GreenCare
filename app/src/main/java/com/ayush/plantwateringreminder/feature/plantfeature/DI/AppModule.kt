@@ -21,7 +21,7 @@ object AppModule {
     @Singleton
      fun provideRetrofit() :Retrofit{
         return Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create())
-            .build().create()
+            .build()
     }
 
     @Provides
@@ -32,7 +32,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providePlantRepo(api: PlantApi): PlantRepository {
+    fun   providePlantRepo(api: PlantApi): PlantRepository {
        return PlantRepositoryImpl(api)
     }
 

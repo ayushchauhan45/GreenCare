@@ -81,6 +81,7 @@ dependencies {
     implementation (libs.androidx.lifecycle.viewmodel.compose)
     implementation (libs.androidx.navigation.compose)
     implementation (libs.androidx.hilt.navigation.compose)
+    implementation(libs.play.services.base)
 
     // Coroutines
     implementation (libs.kotlinx.coroutines.core)
@@ -103,5 +104,8 @@ dependencies {
     implementation (libs.converter.gson)
     implementation (libs.okhttp)
     implementation (libs.logging.interceptor)
+    implementation (libs.coil.compose)
+    implementation ("com.google.accompanist:accompanist-swiperefresh:0.30.1")
+
 
 }

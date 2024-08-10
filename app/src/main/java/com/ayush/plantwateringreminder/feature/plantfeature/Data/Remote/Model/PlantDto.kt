@@ -9,4 +9,4 @@ data class PlantDto(
     val scientific_name: List<String>,
     val sunlight: List<String>,
     val watering: String
-)
+)                   

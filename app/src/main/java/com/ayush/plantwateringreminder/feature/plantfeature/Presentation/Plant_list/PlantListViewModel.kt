@@ -1,5 +1,6 @@
 package com.ayush.plantwateringreminder.feature.plantfeature.Presentation.Plant_list
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -20,12 +21,16 @@ class PlantListViewModel @Inject constructor(
 {
     var state by mutableStateOf(PlantStates())
     private var searchJob: Job? = null
+    init {
+      getPlantList()
+    }
 
     fun onEvent(event: PlantListEvent){
         when(event){
-            PlantListEvent.Refresh -> {
+            is PlantListEvent.Refresh -> {
              getPlantList()
             }
+
             is PlantListEvent.OnSearchQueryChange -> {
                 state = state.copy(
                     searchQuery = event.query
@@ -35,7 +40,6 @@ class PlantListViewModel @Inject constructor(
                     delay(500L)
                     getPlantList()
                 }
-
             }
         }
     }
@@ -48,13 +52,15 @@ class PlantListViewModel @Inject constructor(
              .collect{result ->
                  when(result){
                      is Resource.Error -> Unit
+
                      is Resource.Loading -> {
                          state = state.copy(
                              isLoading = result.isLoading
                          )
                      }
                      is Resource.Success -> {
-                        result.data?.let { plantList ->
+                         Log.d("PlantListViewModel", "Success: ${result.data}")
+                         result.data?.let { plantList ->
                             state = state.copy(
                                 plantList = plantList
                             )

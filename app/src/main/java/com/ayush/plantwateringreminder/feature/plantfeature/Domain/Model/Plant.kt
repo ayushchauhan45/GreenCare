@@ -4,8 +4,12 @@ import com.ayush.plantwateringreminder.feature.plantfeature.Data.Remote.Model.De
 
 data class Plant(
     val common_name: String,
-    val default_image: DefaultImage,
+    val default_image: DefaultImages,
+    val watering: String,
     val id: Int,
-    val sunlight: List<String>,
-    val watering: String
+)
+
+
+data class DefaultImages(
+    val thumbnail: String
 )
