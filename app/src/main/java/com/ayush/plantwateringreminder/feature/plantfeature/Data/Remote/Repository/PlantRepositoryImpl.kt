@@ -23,9 +23,9 @@ class PlantRepositoryImpl @Inject constructor(
          return flow {
              try {
                  emit(Resource.Loading(true))
-                 val response = api.getPlant(query)
+                 val response = api.getPlant(q = query)
                  if (response.isSuccessful) {
-                     val data = response.body()?.data?.map { it.toDomain()  } ?: emptyList()
+                     val data = response.body()?.data?.map { it.toDomain() } ?: emptyList()
                      Log.d("PlantRepository", "Data fetched successfully: $data")
                      emit(Resource.Success(data = data))
                  } else {

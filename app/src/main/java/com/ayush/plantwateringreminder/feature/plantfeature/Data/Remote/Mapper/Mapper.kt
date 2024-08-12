@@ -8,40 +8,39 @@ import com.ayush.plantwateringreminder.feature.plantfeature.Domain.Model.Default
 import com.ayush.plantwateringreminder.feature.plantfeature.Domain.Model.Plant
 import com.ayush.plantwateringreminder.feature.plantfeature.Domain.Model.PlantDetails
 import com.ayush.plantwateringreminder.feature.plantfeature.Domain.Model.WateringGeneralBenchmarks
-
-fun PlantDto.toDomain():Plant {
+fun PlantDto.toDomain(): Plant {
     return Plant(
-        common_name = common_name,
-        default_image = default_image.toDomain(),
-        watering = watering,
-        id = id,
+        common_name = this.common_name,
+        default_image = this.default_image?.toDomain()?:DefaultImages("Unknown"),
+        watering = this.watering?: "Unknown",
+        id = this.id,
     )
 }
 
 fun DefaultImage.toDomain(): DefaultImages {
     return DefaultImages(
-        thumbnail = thumbnail
+        thumbnail = this.thumbnail?:"Unknown"
     )
 }
 
 
-fun PlantDtoDetail.toDomain():PlantDetails {
+fun PlantDtoDetail.toDomain(): PlantDetails {
     return PlantDetails(
-        common_name = common_name,
-        cycle = cycle,
-        description = description,
-        id = id,
-        scientific_name = scientific_name,
-        soil = soil,
-        volume_water_requirement = volume_water_requirement,
-        watering = watering,
-        watering_general_benchmark = watering_general_benchmark.toDomain(),
-        watering_period = watering_period
+        common_name = this.common_name,
+        cycle = this.cycle,
+        description = this.description,
+        id = this.id,
+        scientific_name = this.scientific_name,
+        soil = this.soil,
+        volume_water_requirement = this.volume_water_requirement,
+        watering = this.watering,
+        watering_general_benchmark = this.watering_general_benchmark.toDomain(),
+        watering_period = this.watering_period
     )
 }
 fun WateringGeneralBenchmark.toDomain(): WateringGeneralBenchmarks {
     return WateringGeneralBenchmarks(
-        unit = unit,
-        value = value
+        unit = this.unit,
+        value = this.value
     )
 }

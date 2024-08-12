@@ -21,16 +21,13 @@ class PlantListViewModel @Inject constructor(
 {
     var state by mutableStateOf(PlantStates())
     private var searchJob: Job? = null
+
     init {
       getPlantList()
     }
 
     fun onEvent(event: PlantListEvent){
         when(event){
-            is PlantListEvent.Refresh -> {
-             getPlantList()
-            }
-
             is PlantListEvent.OnSearchQueryChange -> {
                 state = state.copy(
                     searchQuery = event.query
@@ -51,7 +48,9 @@ class PlantListViewModel @Inject constructor(
          repository.getPlantList(query)
              .collect{result ->
                  when(result){
-                     is Resource.Error -> Unit
+                     is Resource.Error -> {
+                         Log.e("PlantListViewModel", "Error: ${result.message}")
+                     }
 
                      is Resource.Loading -> {
                          state = state.copy(
@@ -60,11 +59,10 @@ class PlantListViewModel @Inject constructor(
                      }
                      is Resource.Success -> {
                          Log.d("PlantListViewModel", "Success: ${result.data}")
-                         result.data?.let { plantList ->
+                         result.data?.let{ plantList ->
                             state = state.copy(
                                 plantList = plantList
                             )
-
                         }
                      }
                  }
@@ -72,4 +70,5 @@ class PlantListViewModel @Inject constructor(
              }
      }
     }
+
 }

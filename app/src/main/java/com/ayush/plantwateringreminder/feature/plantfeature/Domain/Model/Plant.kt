@@ -1,6 +1,5 @@
 package com.ayush.plantwateringreminder.feature.plantfeature.Domain.Model
 
-import com.ayush.plantwateringreminder.feature.plantfeature.Data.Remote.Model.DefaultImage
 
 data class Plant(
     val common_name: String,
