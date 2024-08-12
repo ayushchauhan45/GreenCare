@@ -1,6 +1,5 @@
 package com.ayush.plantwateringreminder.feature.plantfeature.Data.Remote
 
-import com.ayush.plantwateringreminder.feature.plantfeature.Data.Remote.Model.PlantDto
 import com.ayush.plantwateringreminder.feature.plantfeature.Data.Remote.Model.PlantDtoDetail
 import com.ayush.plantwateringreminder.feature.plantfeature.Data.Remote.Model.PlantResponse
 import com.ayush.plantwateringreminder.feature.plantfeature.util.Companion.API_KEY
