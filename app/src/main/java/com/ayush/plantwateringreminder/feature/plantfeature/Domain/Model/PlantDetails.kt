@@ -14,8 +14,8 @@ data class PlantDetails(
     val cycle: String,
     val description: String,
     val id: Int,
-    val scientific_name: List<String>,
     val soil: List<Any>,
+    val default_image: DefaultImagesX,
     val volume_water_requirement: List<Any>,
     val watering: String,
     val watering_general_benchmark: WateringGeneralBenchmarks,
@@ -24,4 +24,7 @@ data class PlantDetails(
 data class WateringGeneralBenchmarks(
     val unit: String,
     val value: String
+)
+data class DefaultImagesX(
+    val small_url: String
 )

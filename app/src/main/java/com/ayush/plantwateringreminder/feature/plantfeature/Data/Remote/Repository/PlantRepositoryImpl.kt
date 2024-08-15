@@ -26,19 +26,15 @@ class PlantRepositoryImpl @Inject constructor(
                  val response = api.getPlant(q = query)
                  if (response.isSuccessful) {
                      val data = response.body()?.data?.map { it.toDomain() } ?: emptyList()
-                     Log.d("PlantRepository", "Data fetched successfully: $data")
                      emit(Resource.Success(data = data))
                  } else {
-                     Log.e("PlantRepository", "API call failed: ${response.message()}")
                      emit(Resource.Error("Can't fetch data."))
                  }
              }catch (e: IOException){
                  e.printStackTrace()
-                 Log.e("PlantRepository", "IOException: ${e.message}")
                  emit(Resource.Error(e.message ?: "Unknown error"))
              }catch (e: HttpException){
                  e.printStackTrace()
-                 Log.e("PlantRepository", "HttpException: ${e.message}")
                  emit(Resource.Error(e.message ?: "Unknown error"))
              }
              catch (e: Exception) {
@@ -51,30 +47,30 @@ class PlantRepositoryImpl @Inject constructor(
          }
     }
 
-    override suspend fun getPlantDetails(id: String): Flow<Resource<PlantDetails>> {
-        return flow {
-            try {
-                emit(Resource.Loading(true))
-                val response = api.getPlantDetails(id)
-                if (response.isSuccessful) {
-                    val data = response.body()?.toDomain()
-                    if (data != null) {
-                       emit( Resource.Success(
-                            data = data
-                        ))
-                    } else {
-                        emit(Resource.Error("Can't fetch data"))
-                    }
+    override suspend fun getPlantDetails(id: String): Resource<PlantDetails>
+    {
+      return  try {
+            val response = api.getPlantDetails(id)
+            if (response.isSuccessful) {
+                val data = response.body()?.toDomain()
+                if (data != null) {
+                    Resource.Success(
+                        data = data
+                    )
                 } else {
-                   emit( Resource.Error("Can't fetch the api"))
+                    Resource.Error("Can't fetch data")
                 }
-            } catch (e: Exception) {
-                e.printStackTrace()
-                emit(Resource.Error(e.message ?: "Unknown error"))
+            } else {
+                Resource.Error("Can't fetch the api")
             }
-            finally {
-                emit(Resource.Loading(false))
-            }
+        } catch (e: IOException)
+        {
+            e.printStackTrace()
+            Resource.Error(message ="Can't load the data ")
+        }catch (e:HttpException){
+              e.printStackTrace()
+              Resource.Error(message ="Can't load the data ")
         }
+
     }
 }
