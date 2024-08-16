@@ -29,6 +29,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.ayush.plantwateringreminder.R
 import com.ayush.ui.theme.White
 
@@ -36,7 +37,8 @@ import com.ayush.ui.theme.White
 @SuppressLint("SuspiciousIndentation")
 @Composable
 fun PlantScreen(
-    viewModel: PlantListViewModel = hiltViewModel()
+    viewModel: PlantListViewModel = hiltViewModel(),
+    navController: NavController
 ) {
 
     val state = viewModel.state
@@ -88,11 +90,11 @@ fun PlantScreen(
                             .width(300.dp)
                             .background(White)
                             .height(IntrinsicSize.Min)
-                            .clickable {}
+                            .clickable {
+                                navController.navigate("plant_detail_screen/${plant.id}")
+                            }
                     )
-
                 }
-
             }
 
         }

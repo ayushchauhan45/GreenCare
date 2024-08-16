@@ -29,7 +29,6 @@ fun DefaultImage.toDomain(): DefaultImages {
 fun PlantDtoDetail.toDomain(): PlantDetails {
     return PlantDetails(
         common_name = this.common_name,
-        cycle = this.cycle,
         description = this.description,
         id = this.id,
         soil = this.soil,
@@ -42,7 +41,7 @@ fun PlantDtoDetail.toDomain(): PlantDetails {
 }
 fun DefaultImageX.toDomain(): DefaultImagesX{
     return DefaultImagesX(
-        small_url = this.small_url?:"Unknown"
+        original_url = this.original_url?:"Unknown"
     )
 }
 fun WateringGeneralBenchmark.toDomain(): WateringGeneralBenchmarks {
