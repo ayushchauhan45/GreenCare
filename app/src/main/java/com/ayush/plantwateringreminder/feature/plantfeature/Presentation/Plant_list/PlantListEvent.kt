@@ -3,5 +3,4 @@ package com.ayush.plantwateringreminder.feature.plantfeature.Presentation.Plant_
 
 sealed class PlantListEvent {
     data class OnSearchQueryChange(val query: String) : PlantListEvent()
-
 }

@@ -47,7 +47,7 @@ class PlantRepositoryImpl @Inject constructor(
          }
     }
 
-    override suspend fun getPlantDetails(id: String): Resource<PlantDetails>
+    override suspend fun getPlantDetails(id: Int): Resource<PlantDetails>
     {
       return  try {
             val response = api.getPlantDetails(id)
@@ -58,7 +58,7 @@ class PlantRepositoryImpl @Inject constructor(
                         data = data
                     )
                 } else {
-                    Resource.Error("Can't fetch data")
+                    Resource.Error("Can't fetch data 1")
                 }
             } else {
                 Resource.Error("Can't fetch the api")
@@ -66,10 +66,10 @@ class PlantRepositoryImpl @Inject constructor(
         } catch (e: IOException)
         {
             e.printStackTrace()
-            Resource.Error(message ="Can't load the data ")
+            Resource.Error(message ="Can't load the data 2 ")
         }catch (e:HttpException){
               e.printStackTrace()
-              Resource.Error(message ="Can't load the data ")
+              Resource.Error(message ="Can't load the data 3")
         }
 
     }

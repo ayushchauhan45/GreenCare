@@ -5,6 +5,7 @@ import com.ayush.plantwateringreminder.feature.plantfeature.Data.Remote.Model.Pl
 import com.ayush.plantwateringreminder.feature.plantfeature.util.Companion.API_KEY
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface PlantApi {
@@ -14,9 +15,9 @@ interface PlantApi {
         @Query("q") q: String
     ): Response<PlantResponse>
 
-    @GET("api/species/details/")
+    @GET("api/species/details/{id}")
     suspend fun getPlantDetails(
-        @Query("id") id:String,
+        @Path("id") id:Int,
         @Query("key") apiKey: String = API_KEY
     ): Response<PlantDtoDetail>
 }

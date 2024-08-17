@@ -35,18 +35,18 @@ fun PlantDtoDetail.toDomain(): PlantDetails {
         volume_water_requirement = this.volume_water_requirement,
         watering = this.watering,
         watering_general_benchmark = this.watering_general_benchmark.toDomain(),
-        watering_period = this.watering_period,
+        watering_period = this.watering_period?:"Unknown",
         default_image = this.default_image?.toDomain()?:DefaultImagesX("Unknown")
     )
 }
 fun DefaultImageX.toDomain(): DefaultImagesX{
     return DefaultImagesX(
-        original_url = this.original_url?:"Unknown"
+        original_url = this.original_url?:"unknown"
     )
 }
 fun WateringGeneralBenchmark.toDomain(): WateringGeneralBenchmarks {
     return WateringGeneralBenchmarks(
-        unit = this.unit,
-        value = this.value
+        unit = this.unit?:"Unknown",
+        value = this.value?:"Unknown"
     )
 }

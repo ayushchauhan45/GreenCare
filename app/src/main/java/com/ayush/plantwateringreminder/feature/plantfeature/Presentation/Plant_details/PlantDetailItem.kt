@@ -1,6 +1,5 @@
 package com.ayush.plantwateringreminder.feature.plantfeature.Presentation.Plant_details
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,6 +19,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.sharp.DateRange
 import androidx.compose.material.icons.sharp.FavoriteBorder
 import androidx.compose.material.icons.sharp.Search
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -35,13 +35,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import coil.compose.SubcomposeAsyncImage
 import com.ayush.plantwateringreminder.R
 import com.ayush.plantwateringreminder.feature.plantfeature.Domain.Model.PlantDetails
 
 @Composable
 fun PlantDetailsItem(plantDetails: PlantDetails,
                      onBackClick:()->Unit)
-  {
+{
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -66,7 +67,7 @@ fun PlantDetailsItem(plantDetails: PlantDetails,
                 .background(Color.White)
             ){
                 IconButton(onClick = {
-                    onBackClick
+                    onBackClick()
                 }) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
@@ -88,7 +89,7 @@ fun PlantDetailsItem(plantDetails: PlantDetails,
                 IconButton(onClick = { /*TODO*/ }) {
                     Icon(
                         imageVector = Icons.Sharp.FavoriteBorder,
-                        contentDescription = "Back Button"
+                        contentDescription = "Favourite"
                     )
                 }
 
@@ -105,13 +106,39 @@ fun PlantDetailsItem(plantDetails: PlantDetails,
             .clip(RoundedCornerShape(8.dp))
             .shadow(5.dp, RoundedCornerShape(5.dp))
         ){
-            AsyncImage(model = plantDetails.default_image.original_url,
+            SubcomposeAsyncImage(model = plantDetails.default_image.original_url,
                 contentDescription = null,
-                contentScale = ContentScale.Crop)
+                contentScale = ContentScale.Crop,
+                loading = {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            ,
+                        contentAlignment = Alignment.Center
+                    ){
+                        CircularProgressIndicator()
+                    }
+                },
+                error = {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(Color.Gray.copy(alpha = 0.3f)),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            painter = painterResource(id =R.drawable.baseline_broken_image_24),
+                            contentDescription = "Image not available",
+                            tint = Color.Gray
+                        )
+                    }
+                }
+            )
+
 
         }
         Spacer(modifier = Modifier.height(20.dp))
-        Text(text =plantDetails.common_name,
+        Text(text ="#${plantDetails.id} ${plantDetails.common_name}",
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
@@ -130,7 +157,7 @@ fun PlantDetailsItem(plantDetails: PlantDetails,
         Row {
             Box(
                 modifier = Modifier
-                    .size(50.dp)
+                    .size(80.dp)
                     .clip(RoundedCornerShape(5.dp))
                     .shadow(3.dp, RoundedCornerShape(3.dp))
                     .background(
@@ -159,7 +186,7 @@ fun PlantDetailsItem(plantDetails: PlantDetails,
         Row {
             Box(
                 modifier = Modifier
-                    .size(50.dp)
+                    .size(80.dp)
                     .clip(RoundedCornerShape(5.dp))
                     .shadow(3.dp, RoundedCornerShape(3.dp))
                     .background(
@@ -178,17 +205,22 @@ fun PlantDetailsItem(plantDetails: PlantDetails,
             Column {
                 Text(text = "Watering Volume",
                     fontWeight = FontWeight.Bold)
-                Text(text = plantDetails.volume_water_requirement.toString(),
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = Color(0xFF038530
-                    ))
+
+                val WaterVolumeText = plantDetails.volume_water_requirement.joinToString(", ") { watervolume ->
+                    watervolume.toString()
+                }
+
+                Text(text = WaterVolumeText ,
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = Color(0xFF038530
+                        ))
             }
         }
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(20.dp))
         Row {
             Box(
                 modifier = Modifier
-                    .size(50.dp)
+                    .size(80.dp)
                     .clip(RoundedCornerShape(5.dp))
                     .shadow(3.dp, RoundedCornerShape(3.dp))
                     .background(
@@ -203,7 +235,7 @@ fun PlantDetailsItem(plantDetails: PlantDetails,
                         .align(Alignment.Center)
                         .size(30.dp))
             }
-            Spacer(modifier = Modifier.width(25.dp))
+            Spacer(modifier = Modifier.width(10.dp))
             Column {
                 Text(text = "Watering Benchmark",
                     fontWeight = FontWeight.Bold)
@@ -213,11 +245,11 @@ fun PlantDetailsItem(plantDetails: PlantDetails,
                     ))
             }
         }
-        Spacer(modifier = Modifier.height(25.dp))
+        Spacer(modifier = Modifier.height(20.dp))
         Row {
             Box(
                 modifier = Modifier
-                    .size(50.dp)
+                    .size(80.dp)
                     .clip(RoundedCornerShape(5.dp))
                     .shadow(3.dp, RoundedCornerShape(3.dp))
                     .background(
@@ -227,28 +259,47 @@ fun PlantDetailsItem(plantDetails: PlantDetails,
                     )
                     .padding(start = 8.dp)
             ) {
-                Icon(imageVector = Icons.Sharp.Search, contentDescription = null,
+                Icon(painter = painterResource(id = R.drawable.watering_can) , contentDescription = null,
                     modifier = Modifier
                         .align(Alignment.Center)
                         .size(30.dp))
             }
             Spacer(modifier = Modifier.width(10.dp))
             Column {
-                Text(text = "Soil",
+                Text(text = "Watering BenchMark",
                     fontWeight = FontWeight.Bold)
-                Text(text = plantDetails.soil.toString(),
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = Color(0xFF038530
-                    ))
+                    Text(text =" ${plantDetails.watering_general_benchmark.value} ${plantDetails.watering_general_benchmark.unit} ",
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = Color(0xFF038530
+                        ),
+                        maxLines = 1)
+
+
+
             }
         }
         Spacer(modifier = Modifier.height(20.dp))
-        Text(text = "Watering BenchMark",
+
+        Text(text = "Soil",
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(start = 5.dp))
         Spacer(modifier = Modifier.height(10.dp))
-        Text(text = "${plantDetails.common_name} plant requires water approximately ${plantDetails.watering_general_benchmark.value} ${plantDetails.watering_general_benchmark.unit} of ${plantDetails.watering} ")
+        val soilTypesText = plantDetails.soil.joinToString(", ") { soilType ->
+            soilType.toString()
+        }
+
+            Text(text = "${plantDetails.common_name} plant requires  $soilTypesText soils"  ,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        start = 10.dp,
+                        bottom = 25.dp
+                    ),
+            )
+
+
+
 
     }
 

@@ -12,7 +12,6 @@ data class PlantDtoDetail(
     val cuisine: Boolean?,
     val cycle: String,
     val default_image: DefaultImageX?,
-    val depth_water_requirement: DepthWaterRequirement,
     val description: String,
     val dimension: String?,
     val dimensions: Dimensions?,
@@ -47,7 +46,6 @@ data class PlantDtoDetail(
     val poisonous_to_humans: Int?,
     val poisonous_to_pets: Int?,
     val propagation: List<String>?,
-    val pruning_count: List<Any>?,
     val pruning_month: List<String>?,
     val salt_tolerant: Boolean?,
     val scientific_name: List<String>,
@@ -60,5 +58,5 @@ data class PlantDtoDetail(
     val volume_water_requirement: List<Any>,
     val watering: String,
     val watering_general_benchmark: WateringGeneralBenchmark,
-    val watering_period: Any
+    val watering_period: Any?
 )

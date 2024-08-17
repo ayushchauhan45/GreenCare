@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.ayush.plantwateringreminder.R
+import com.ayush.plantwateringreminder.feature.plantfeature.Presentation.util.Screens
 import com.ayush.ui.theme.White
 
 
@@ -91,7 +92,7 @@ fun PlantScreen(
                             .background(White)
                             .height(IntrinsicSize.Min)
                             .clickable {
-                                navController.navigate("plant_detail_screen/${plant.id}")
+                                navController.navigate(Screens.PlantDetailScreen.route+"?id=${plant.id}")
                             }
                     )
                 }

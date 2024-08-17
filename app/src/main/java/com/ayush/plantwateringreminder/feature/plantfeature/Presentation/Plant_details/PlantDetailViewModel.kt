@@ -8,9 +8,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ayush.plantwateringreminder.feature.plantfeature.Domain.Repository.PlantRepository
 import com.ayush.plantwateringreminder.feature.plantfeature.util.Resource
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class PlantDetailViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val repository: PlantRepository
@@ -20,7 +22,7 @@ class PlantDetailViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val plantId = savedStateHandle.get<String>("id") ?: return@launch
+            val plantId = savedStateHandle.get<Int>("id") ?: return@launch
             state =  state.copy(
                 isLoading = true
             )

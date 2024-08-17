@@ -28,28 +28,26 @@ class MainActivity : ComponentActivity() {
               val navController = rememberNavController()
                 NavHost(
                     navController = navController,
-                    startDestination = "plant_screen"
+                    startDestination = Screens.PlantScreen.route
                 ){
-                    composable("plant_screen"){
+                    composable(Screens.PlantScreen.route){
                         PlantScreen(
                             navController = navController
                         )
-
                     }
-                    composable( "plant_detail_screen/{id}",
+                    composable( Screens.PlantDetailScreen.route+"?id={id}",
                         arguments = listOf(
-                            navArgument("id"){
+                            navArgument(name ="id"){
                                 type = NavType.IntType
                             }
                         )
                     ){backStackEntry->
-                      val id  = backStackEntry.arguments?.getInt("id")!!
+                      val id  = backStackEntry.arguments?.getInt("id")
                         PlantDetailsScreen(
                             navController = navController,
                             id = id
                         )
                     }
-
                 }
             }
         }

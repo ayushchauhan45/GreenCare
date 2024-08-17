@@ -6,6 +6,8 @@ plugins {
     id("dagger.hilt.android.plugin")
     id ("kotlin-kapt")
     id("com.google.dagger.hilt.android") version "2.51.1" apply false
+    alias(libs.plugins.compose.compiler)
+
 }
 
 android {
@@ -83,6 +85,8 @@ dependencies {
     implementation (libs.androidx.hilt.navigation.compose)
     implementation(libs.play.services.base)
 
+
+
     // Coroutines
     implementation (libs.kotlinx.coroutines.core)
     implementation (libs.kotlinx.coroutines.android)
@@ -105,7 +109,9 @@ dependencies {
     implementation (libs.okhttp)
     implementation (libs.logging.interceptor)
     implementation (libs.coil.compose)
-    implementation ("com.google.accompanist:accompanist-swiperefresh:0.30.1")
+    implementation (libs.coil.compose.v222)
+
+    implementation (libs.accompanist.swiperefresh)
 
 
 }

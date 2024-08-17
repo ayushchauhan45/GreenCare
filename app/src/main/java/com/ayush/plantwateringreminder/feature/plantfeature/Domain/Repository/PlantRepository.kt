@@ -11,6 +11,6 @@ interface PlantRepository {
         query:String
     ):Flow<Resource<List<Plant>>>
 
-    suspend fun getPlantDetails(id:String): Resource<PlantDetails>
+    suspend fun getPlantDetails(id:Int): Resource<PlantDetails>
 
 }
