@@ -47,7 +47,8 @@ fun PlantDetailsItem(plantDetails: PlantDetails,
         modifier = Modifier
             .fillMaxSize()
             .padding(10.dp)
-    ) {
+    )
+    {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -134,8 +135,6 @@ fun PlantDetailsItem(plantDetails: PlantDetails,
                     }
                 }
             )
-
-
         }
         Spacer(modifier = Modifier.height(20.dp))
         Text(text ="#${plantDetails.id} ${plantDetails.common_name}",
