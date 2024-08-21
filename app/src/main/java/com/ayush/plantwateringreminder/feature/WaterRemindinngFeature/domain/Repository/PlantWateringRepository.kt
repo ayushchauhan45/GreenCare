@@ -3,12 +3,12 @@ package com.ayush.plantwateringreminder.feature.WaterRemindinngFeature.Domain.Re
 import com.ayush.plantwateringreminder.feature.WaterRemindinngFeature.Domain.Model.PlantEntity
 import kotlinx.coroutines.flow.Flow
 
-interface PlantRepository {
+interface PlantWateringRepository {
     fun getPlant(): Flow<List<PlantEntity>>
 
-    fun insertPlant(plant: PlantEntity)
+    suspend fun insertPlant(plant: PlantEntity)
 
-    fun deletePlant(plant: PlantEntity)
+    suspend fun deletePlant(plant: PlantEntity)
 
-    fun getPlantById(id:Int): PlantEntity?
+    suspend fun getPlantById(id:Int): PlantEntity?
 }
