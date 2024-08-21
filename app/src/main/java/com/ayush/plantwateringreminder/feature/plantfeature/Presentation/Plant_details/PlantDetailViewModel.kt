@@ -58,19 +58,31 @@ class PlantDetailViewModel @Inject constructor(
     }
 
     fun onEvent(event: PlantDetailsEvent){
-        viewModelScope.launch {
-             try{
-                 wateringRepository.insertPlant(
-                     plant = wateringState.myPlant ?: throw Exception("Plant not found")
-                 )
-                 _eventFlow.emit(UiEvent.LikePlant)
-             }catch (e:Exception){
-                 _eventFlow.emit(
-                     UiEvent.ShowSnackBar(
-                         message = e.message ?: "Unknown error"
-                     )
-                 )
-             }
+        when(event){
+            is PlantDetailsEvent.LikePlant->{
+                viewModelScope.launch {
+                    try {
+                        wateringRepository.insertPlant(
+                            plant = wateringState.myPlant ?: throw Exception("Plant not found")
+                        )
+                        _eventFlow.emit(UiEvent.LikePlant)
+                    } catch (e: Exception) {
+                        _eventFlow.emit(
+                            UiEvent.ShowSnackBar(
+                                message = e.message ?: "Unknown error"
+                            )
+                        )
+                    }
+                }
+            }
+
+            PlantDetailsEvent.UnLikePlant -> {
+                viewModelScope.launch {
+                    wateringRepository.deletePlant(
+                        plant = wateringState.myPlant?: throw Exception("Plant not found")
+                    )
+                }
+            }
         }
     }
     sealed class UiEvent{

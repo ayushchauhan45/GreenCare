@@ -2,4 +2,5 @@ package com.ayush.plantwateringreminder.feature.plantfeature.Presentation.Plant_
 
 sealed class PlantDetailsEvent {
      data object LikePlant: PlantDetailsEvent()
+     data object UnLikePlant:PlantDetailsEvent()
 }
