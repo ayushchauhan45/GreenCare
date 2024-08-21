@@ -4,8 +4,9 @@ import com.ayush.plantwateringreminder.feature.WaterRemindinngFeature.Data.DataS
 import com.ayush.plantwateringreminder.feature.WaterRemindinngFeature.Domain.Model.PlantEntity
 import com.ayush.plantwateringreminder.feature.WaterRemindinngFeature.Domain.Repository.PlantWateringRepository
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class PlantWateringRepositoryImpl(
+class PlantWateringRepositoryImpl @Inject constructor(
     private val dao:PlantDao
 ) : PlantWateringRepository {
     override fun getPlant(): Flow<List<PlantEntity>> {

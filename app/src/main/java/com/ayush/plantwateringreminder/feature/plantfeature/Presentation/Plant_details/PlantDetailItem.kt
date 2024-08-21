@@ -41,7 +41,8 @@ import com.ayush.plantwateringreminder.feature.plantfeature.Domain.Model.PlantDe
 
 @Composable
 fun PlantDetailsItem(plantDetails: PlantDetails,
-                     onBackClick:()->Unit)
+                     onBackClick:()->Unit,
+                     onEvent:()->Unit)
 {
     Column(
         modifier = Modifier
@@ -87,7 +88,7 @@ fun PlantDetailsItem(plantDetails: PlantDetails,
                 .clip(CircleShape)
                 .background(Color.White)
             ) {
-                IconButton(onClick = { /*TODO*/ }) {
+                IconButton(onClick = { onEvent() }) {
                     Icon(
                         imageVector = Icons.Sharp.FavoriteBorder,
                         contentDescription = "Favourite"

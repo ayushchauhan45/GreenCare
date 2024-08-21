@@ -6,19 +6,28 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ayush.plantwateringreminder.feature.WaterRemindinngFeature.Domain.Repository.PlantWateringRepository
+import com.ayush.plantwateringreminder.feature.WaterRemindinngFeature.Presentation.My_Plants_Details.LikePlantDetailState
 import com.ayush.plantwateringreminder.feature.plantfeature.Domain.Repository.PlantRepository
 import com.ayush.plantwateringreminder.feature.plantfeature.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class PlantDetailViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val repository: PlantRepository
-) : ViewModel() {
+    private val repository: PlantRepository,
+    private val wateringRepository: PlantWateringRepository
+) : ViewModel()
+{
 
     var state by mutableStateOf(PlantDetailState())
+    var wateringState by mutableStateOf(LikePlantDetailState())
+    private val _eventFlow = MutableSharedFlow<UiEvent>()
+    val eventFlow = _eventFlow.asSharedFlow()
 
     init {
         viewModelScope.launch {
@@ -47,4 +56,28 @@ class PlantDetailViewModel @Inject constructor(
             }
         }
     }
+
+    fun onEvent(event: PlantDetailsEvent){
+        viewModelScope.launch {
+             try{
+                 wateringRepository.insertPlant(
+                     plant = wateringState.myPlant ?: throw Exception("Plant not found")
+                 )
+                 _eventFlow.emit(UiEvent.LikePlant)
+             }catch (e:Exception){
+                 _eventFlow.emit(
+                     UiEvent.ShowSnackBar(
+                         message = e.message ?: "Unknown error"
+                     )
+                 )
+             }
+        }
+    }
+    sealed class UiEvent{
+        data class ShowSnackBar(val message:String):UiEvent()
+        data object LikePlant: UiEvent()
+
+    }
 }
+
+
