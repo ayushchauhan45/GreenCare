@@ -21,7 +21,6 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.Search
-import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
@@ -33,57 +32,23 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.ayush.plantwateringreminder.R
-import com.ayush.plantwateringreminder.feature.Screens
 import com.ayush.plantwateringreminder.feature.WaterRemindinngFeature.Presentation.My_Plants.component.BottomNavigationItem
 import com.ayush.plantwateringreminder.feature.WaterRemindinngFeature.Presentation.My_Plants.component.LikePlantItem
 import com.ayush.ui.theme.White
 
 
-@SuppressLint("SuspiciousIndentation", "UnusedMaterial3ScaffoldPaddingParameter")
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun LikePlantScreen(
     viewModel: LikePlantViewModel = hiltViewModel(),
     navController: NavController
 ) {
-    var indexedItem = viewModel.selectedItemIndex.index
     val state = viewModel.state
     val plantLogo = painterResource(id = R.drawable.logo)
-    val bottomItem = listOf(
-        BottomNavigationItem(
-            title = "Home",
-            selected = Icons.Filled.Favorite,
-            unselected = Icons.Outlined.Favorite,
-            navigationRoute = Screens.LikePlant.route
-    ),
-        BottomNavigationItem(
-            title = "Search",
-            selected = Icons.Filled.Search,
-            unselected = Icons.Outlined.Search,
-            navigationRoute = Screens.PlantScreen.route
-        )
-    )
-       Scaffold(
-           bottomBar = {
-               NavigationBar {
-                   bottomItem.forEachIndexed {index, item->
-                       NavigationBarItem(
-                           selected = indexedItem == index,
-                           onClick = {
-                             indexedItem = index
-                               navController.navigate(item.navigationRoute)
-                           },
-                           icon = {
-                               Icon(imageVector = if(index == indexedItem)item.selected else item.unselected,
-                                   contentDescription = item.title)
-                           }
-                       )
-                   }
-               }
-           }
-       ){ padding->
-        Column (
-            modifier = Modifier.padding(padding)
-        ){
+
+
+       Box(modifier = Modifier.fillMaxSize()){
+        Column {
             Image(
                 painter = plantLogo, contentDescription = null,
                 modifier = Modifier
