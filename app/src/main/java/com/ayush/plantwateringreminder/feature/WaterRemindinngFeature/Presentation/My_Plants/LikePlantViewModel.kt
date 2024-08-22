@@ -1,11 +1,13 @@
 package com.ayush.plantwateringreminder.feature.WaterRemindinngFeature.Presentation.My_Plants
 
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.getValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ayush.plantwateringreminder.feature.WaterRemindinngFeature.Domain.Repository.PlantWateringRepository
+import com.ayush.plantwateringreminder.feature.WaterRemindinngFeature.Presentation.My_Plants.component.IndexState
+import com.ayush.plantwateringreminder.feature.WaterRemindinngFeature.Presentation.My_Plants.component.LikePlantsState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
@@ -18,6 +20,9 @@ class LikePlantViewModel @Inject constructor(
 ):ViewModel() {
     var state by mutableStateOf(LikePlantsState())
     private var plantJob: Job? =null
+
+    var selectedItemIndex by mutableStateOf(IndexState())
+
 
     init {
          getNote()

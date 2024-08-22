@@ -18,7 +18,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.ayush.plantwateringreminder.R
-import com.ayush.plantwateringreminder.feature.plantfeature.Presentation.util.Screens
+import com.ayush.plantwateringreminder.feature.Screens
 import com.ayush.ui.theme.White
 
 
@@ -105,5 +104,4 @@ fun PlantScreen(
             )
         }
     }
-
 }

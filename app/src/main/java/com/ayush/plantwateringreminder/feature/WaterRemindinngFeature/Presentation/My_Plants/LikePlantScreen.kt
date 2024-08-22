@@ -16,40 +16,74 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.outlined.Favorite
+import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.ayush.plantwateringreminder.R
+import com.ayush.plantwateringreminder.feature.Screens
+import com.ayush.plantwateringreminder.feature.WaterRemindinngFeature.Presentation.My_Plants.component.BottomNavigationItem
 import com.ayush.plantwateringreminder.feature.WaterRemindinngFeature.Presentation.My_Plants.component.LikePlantItem
-import com.ayush.plantwateringreminder.feature.plantfeature.Presentation.Plant_list.PlantItem
-import com.ayush.plantwateringreminder.feature.plantfeature.Presentation.Plant_list.PlantListEvent
-import com.ayush.plantwateringreminder.feature.plantfeature.Presentation.Plant_list.PlantListViewModel
-import com.ayush.plantwateringreminder.feature.plantfeature.Presentation.util.Screens
 import com.ayush.ui.theme.White
 
 
-@SuppressLint("SuspiciousIndentation")
+@SuppressLint("SuspiciousIndentation", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun LikePlantScreen(
     viewModel: LikePlantViewModel = hiltViewModel(),
     navController: NavController
 ) {
-
+    var indexedItem = viewModel.selectedItemIndex.index
     val state = viewModel.state
     val plantLogo = painterResource(id = R.drawable.logo)
-
-    Box(modifier = Modifier.fillMaxSize()) {
-        Column {
+    val bottomItem = listOf(
+        BottomNavigationItem(
+            title = "Home",
+            selected = Icons.Filled.Favorite,
+            unselected = Icons.Outlined.Favorite,
+            navigationRoute = Screens.LikePlant.route
+    ),
+        BottomNavigationItem(
+            title = "Search",
+            selected = Icons.Filled.Search,
+            unselected = Icons.Outlined.Search,
+            navigationRoute = Screens.PlantScreen.route
+        )
+    )
+       Scaffold(
+           bottomBar = {
+               NavigationBar {
+                   bottomItem.forEachIndexed {index, item->
+                       NavigationBarItem(
+                           selected = indexedItem == index,
+                           onClick = {
+                             indexedItem = index
+                               navController.navigate(item.navigationRoute)
+                           },
+                           icon = {
+                               Icon(imageVector = if(index == indexedItem)item.selected else item.unselected,
+                                   contentDescription = item.title)
+                           }
+                       )
+                   }
+               }
+           }
+       ){ padding->
+        Column (
+            modifier = Modifier.padding(padding)
+        ){
             Image(
                 painter = plantLogo, contentDescription = null,
                 modifier = Modifier
@@ -79,8 +113,7 @@ fun LikePlantScreen(
                     )
                 }
             }
-
+        }
         }
     }
 
-}
