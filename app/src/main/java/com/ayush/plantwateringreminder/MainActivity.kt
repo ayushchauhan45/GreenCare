@@ -1,6 +1,5 @@
 package com.ayush.plantwateringreminder
 
-import android.graphics.drawable.Icon
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -9,19 +8,19 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.outlined.Favorite
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -34,7 +33,6 @@ import com.ayush.plantwateringreminder.feature.plantfeature.Presentation.Plant_l
 import com.ayush.plantwateringreminder.feature.Screens
 import com.ayush.plantwateringreminder.feature.WaterRemindinngFeature.Presentation.My_Plants.LikePlantScreen
 import com.ayush.plantwateringreminder.feature.WaterRemindinngFeature.Presentation.My_Plants.component.BottomNavigationItem
-import com.ayush.ui.theme.PlantWateringReminderTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -43,18 +41,16 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            PlantWateringReminderTheme {
-
+           MainScreen()
         }
-    }
 }
 @Composable
 fun MainScreen(navController: NavHostController = rememberNavController()) {
     val bottomItem = listOf(
         BottomNavigationItem(
-            title = "Home",
+            title = "Favourite",
             selected = Icons.Filled.Favorite,
-            unselected = Icons.Outlined.Favorite,
+            unselected = Icons.Outlined.FavoriteBorder,
             navigationRoute = Screens.LikePlant.route
         ),
         BottomNavigationItem(
@@ -65,7 +61,7 @@ fun MainScreen(navController: NavHostController = rememberNavController()) {
         )
     )
 
-    var selectedIndex by remember { mutableStateOf(0) }
+    var selectedIndex by rememberSaveable { mutableStateOf(0) }
 
     Scaffold(
         bottomBar = {
@@ -77,9 +73,16 @@ fun MainScreen(navController: NavHostController = rememberNavController()) {
                             selectedIndex = index
                             navController.navigate(item.navigationRoute)
                         },
+                        label = {
+                            Text(text = item.title)
+                        },
                         icon = {
                             Icon(
-                                imageVector = if (index == selectedIndex) item.selected else item.unselected,
+                                imageVector = if (index == selectedIndex) {
+                                    item.selected
+                                } else {
+                                    item.unselected
+                                    },
                                 contentDescription = item.title
                             )
                         }
@@ -125,6 +128,9 @@ fun MainScreen(navController: NavHostController = rememberNavController()) {
                         navController = navController,
                         id = id
                     )
+                }
+                composable(Screens.LikePlant.route){
+                    LikePlantScreen(navController = navController)
                 }
             }
         }

@@ -31,6 +31,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.ayush.plantwateringreminder.R
 import com.ayush.plantwateringreminder.feature.Screens
+import com.ayush.plantwateringreminder.feature.plantfeature.Presentation.Plant_list.Component.PlantItem
+import com.ayush.plantwateringreminder.feature.plantfeature.Presentation.Plant_list.Component.PlantListEvent
 import com.ayush.ui.theme.White
 
 

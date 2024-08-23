@@ -9,6 +9,8 @@ import androidx.lifecycle.viewModelScope
 import com.ayush.plantwateringreminder.feature.WaterRemindinngFeature.Domain.Repository.PlantWateringRepository
 import com.ayush.plantwateringreminder.feature.WaterRemindinngFeature.Presentation.My_Plants_Details.LikePlantDetailState
 import com.ayush.plantwateringreminder.feature.plantfeature.Domain.Repository.PlantRepository
+import com.ayush.plantwateringreminder.feature.plantfeature.Presentation.Plant_details.Component.PlantDetailState
+import com.ayush.plantwateringreminder.feature.plantfeature.Presentation.Plant_details.Component.PlantDetailsEvent
 import com.ayush.plantwateringreminder.feature.plantfeature.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -66,6 +68,7 @@ class PlantDetailViewModel @Inject constructor(
                             plant = wateringState.myPlant ?: throw Exception("Plant not found")
                         )
                         _eventFlow.emit(UiEvent.LikePlant)
+                        _eventFlow.emit(UiEvent.ShowSnackBar("Plant Added to Favourite"))
                     } catch (e: Exception) {
                         _eventFlow.emit(
                             UiEvent.ShowSnackBar(

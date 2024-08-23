@@ -1,4 +1,4 @@
-package com.ayush.plantwateringreminder.feature.plantfeature.Presentation.Plant_details
+package com.ayush.plantwateringreminder.feature.plantfeature.Presentation.Plant_details.Component
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
