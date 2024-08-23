@@ -1,10 +1,10 @@
 package com.ayush.plantwateringreminder.feature.plantfeature.Presentation.Plant_details
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -32,10 +32,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.ayush.plantwateringreminder.feature.Screens
-import com.ayush.plantwateringreminder.feature.plantfeature.Presentation.Plant_details.Component.FavouriteIconState
 import com.ayush.plantwateringreminder.feature.plantfeature.Presentation.Plant_details.Component.PlantDetailsEvent
 import com.ayush.plantwateringreminder.feature.plantfeature.Presentation.Plant_details.Component.PlantDetailsItem
 import kotlinx.coroutines.flow.collectLatest
@@ -76,12 +76,13 @@ fun PlantDetailsScreen(
     val state = viewModel.state
 
     Scaffold (
-
         modifier = Modifier
             .fillMaxSize()
             .nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            TopAppBar(title = { Text(text = "Plant Details") },
+            TopAppBar(modifier = Modifier.padding(start = 4.dp)
+                .heightIn(max = 24.dp)
+                ,title = { Text(text = "Plant Details") },
                 navigationIcon = {
                     IconButton(onClick = {
                         navController.popBackStack()
