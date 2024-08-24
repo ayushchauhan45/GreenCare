@@ -27,7 +27,6 @@ class PlantDetailViewModel @Inject constructor(
 {
 
     var state by mutableStateOf(PlantDetailState())
-    var wateringState by mutableStateOf(LikePlantDetailState())
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
@@ -65,7 +64,7 @@ class PlantDetailViewModel @Inject constructor(
                 viewModelScope.launch {
                     try {
                         wateringRepository.insertPlant(
-                            plant = wateringState.myPlant ?: throw Exception("Plant not found")
+                            plant = state.plantDetail ?: throw Exception("Plant not found")
                         )
                         _eventFlow.emit(UiEvent.LikePlant)
                         _eventFlow.emit(UiEvent.ShowSnackBar("Plant Added to Favourite"))
@@ -82,7 +81,7 @@ class PlantDetailViewModel @Inject constructor(
             PlantDetailsEvent.UnLikePlant -> {
                 viewModelScope.launch {
                     wateringRepository.deletePlant(
-                        plant = wateringState.myPlant?: throw Exception("Plant not found")
+                        plant = state.plantDetail?: throw Exception("Plant not found")
                     )
                 }
             }

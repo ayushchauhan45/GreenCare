@@ -80,9 +80,7 @@ fun PlantDetailsScreen(
             .fillMaxSize()
             .nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            TopAppBar(modifier = Modifier.padding(start = 4.dp)
-                .heightIn(max = 24.dp)
-                ,title = { Text(text = "Plant Details") },
+            TopAppBar(title = { Text(text = "Plant Details") },
                 navigationIcon = {
                     IconButton(onClick = {
                         navController.popBackStack()
