@@ -46,7 +46,7 @@ fun LikePlantItem(
                     .background(Color(0xFFC9D8CC))
                     .fillMaxHeight()
             ) {
-                AsyncImage(model = plant.defaultImageUrl, contentDescription = null,
+                AsyncImage(model = plant.thumbnailImageUrl, contentDescription = null,
                     modifier = Modifier
                         .padding(10.dp)
                         .fillMaxWidth()

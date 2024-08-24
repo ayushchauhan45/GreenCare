@@ -33,6 +33,8 @@ import com.ayush.plantwateringreminder.feature.plantfeature.Presentation.Plant_l
 import com.ayush.plantwateringreminder.feature.Screens
 import com.ayush.plantwateringreminder.feature.WaterRemindinngFeature.Presentation.My_Plants.LikePlantScreen
 import com.ayush.plantwateringreminder.feature.WaterRemindinngFeature.Presentation.My_Plants.component.BottomNavigationItem
+import com.ayush.plantwateringreminder.feature.WaterRemindinngFeature.Presentation.My_Plants_Details.Component.LikePlantDetailsItem
+import com.ayush.plantwateringreminder.feature.WaterRemindinngFeature.Presentation.My_Plants_Details.LikePlantDetailsScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -103,8 +105,15 @@ fun MainScreen(navController: NavHostController = rememberNavController()) {
                 composable(Screens.LikePlant.route){
                     LikePlantScreen(navController = navController)
                 }
-                composable(Screens.LikePlantDetail.route){
-
+                composable(Screens.LikePlantDetail.route + "?id={id}",
+                    arguments = listOf(
+                        navArgument(name = "id") {
+                            type = NavType.IntType
+                        }
+                    )
+                ){backStackEntry->
+                    val id = backStackEntry.arguments?.getInt("id")
+                    LikePlantDetailsScreen(navController = navController, id = id)
                 }
             }
             navigation(
@@ -123,7 +132,7 @@ fun MainScreen(navController: NavHostController = rememberNavController()) {
                         }
                     )
                 ) { backStackEntry ->
-                    val id = backStackEntry.arguments?.getInt("id")
+                    val id = backStackEntry.arguments?.getInt("id") ?: -1
                     PlantDetailsScreen(
                         navController = navController,
                         id = id

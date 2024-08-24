@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.ayush.plantwateringreminder.R
+import com.ayush.plantwateringreminder.feature.Screens
 import com.ayush.plantwateringreminder.feature.WaterRemindinngFeature.Presentation.My_Plants.component.BottomNavigationItem
 import com.ayush.plantwateringreminder.feature.WaterRemindinngFeature.Presentation.My_Plants.component.LikePlantItem
 import com.ayush.ui.theme.White
@@ -73,7 +74,7 @@ fun LikePlantScreen(
                             .background(White)
                             .height(IntrinsicSize.Min)
                             .clickable {
-
+                              navController.navigate(Screens.LikePlantDetail.route)
                             }
                     )
                 }

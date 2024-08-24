@@ -18,5 +18,7 @@ data class WateringGeneralBenchmarks(
     val value: String
 )
 data class DefaultImagesX(
-    val original_url: String
+    val original_url: String,
+    val thumbnail: String
+
 )

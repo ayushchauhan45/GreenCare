@@ -8,10 +8,11 @@ fun PlantDetails.toEntity(): PlantEntity {
         id = this.id,
         commonName = this.common_name,
         description = this.description,
-        defaultImageUrl = this.default_image.original_url,
+        thumbnailImageUrl = this.default_image.thumbnail,
         watering = this.watering,
         wateringUnit = this.watering_general_benchmark.unit,
         wateringValue = this.watering_general_benchmark.value,
+        originalImageUrl = this.default_image.original_url,
         wateringPeriod = this.watering_period.toString()
     )
 }

@@ -36,12 +36,13 @@ fun PlantDtoDetail.toDomain(): PlantDetails {
         watering = this.watering,
         watering_general_benchmark = this.watering_general_benchmark.toDomain(),
         watering_period = this.watering_period?:"Unknown",
-        default_image = this.default_image?.toDomain()?:DefaultImagesX("Unknown")
+        default_image = this.default_image?.toDomain()?:DefaultImagesX("Unknown", "unknown")
     )
 }
 fun DefaultImageX.toDomain(): DefaultImagesX{
     return DefaultImagesX(
-        original_url = this.original_url?:"unknown"
+        original_url = this.original_url?:"unknown",
+        thumbnail = this.thumbnail?:"unknown"
     )
 }
 fun WateringGeneralBenchmark.toDomain(): WateringGeneralBenchmarks {
