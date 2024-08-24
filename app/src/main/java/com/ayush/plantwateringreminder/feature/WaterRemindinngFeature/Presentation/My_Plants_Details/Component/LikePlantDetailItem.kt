@@ -53,7 +53,7 @@ fun LikePlantDetailsItem(
                 .clip(RoundedCornerShape(8.dp))
                 .shadow(5.dp, RoundedCornerShape(5.dp))
         ) {
-            SubcomposeAsyncImage(model = plantEntity.thumbnailImageUrl,
+            SubcomposeAsyncImage(model = plantEntity.originalImageUrl,
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 loading = {

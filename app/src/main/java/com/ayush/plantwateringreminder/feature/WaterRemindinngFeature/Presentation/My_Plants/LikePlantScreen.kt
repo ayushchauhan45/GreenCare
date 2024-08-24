@@ -74,7 +74,7 @@ fun LikePlantScreen(
                             .background(White)
                             .height(IntrinsicSize.Min)
                             .clickable {
-                              navController.navigate(Screens.LikePlantDetail.route)
+                              navController.navigate(Screens.LikePlantDetail.route+"?id=${plant.id}")
                             }
                     )
                 }

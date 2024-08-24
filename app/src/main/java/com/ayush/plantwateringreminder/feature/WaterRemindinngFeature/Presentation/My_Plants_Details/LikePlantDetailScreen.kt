@@ -29,8 +29,6 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.ayush.plantwateringreminder.feature.WaterRemindinngFeature.Presentation.My_Plants_Details.Component.LikePlantDetailsItem
-import com.ayush.plantwateringreminder.feature.plantfeature.Presentation.Plant_details.Component.PlantDetailsEvent
-import com.ayush.plantwateringreminder.feature.plantfeature.Presentation.Plant_details.Component.PlantDetailsItem
 
 
 @OptIn(ExperimentalMaterial3Api::class)

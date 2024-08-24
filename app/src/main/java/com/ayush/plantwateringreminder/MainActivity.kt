@@ -112,7 +112,7 @@ fun MainScreen(navController: NavHostController = rememberNavController()) {
                         }
                     )
                 ){backStackEntry->
-                    val id = backStackEntry.arguments?.getInt("id")
+                    val id = backStackEntry.arguments?.getInt("id")  ?: -1
                     LikePlantDetailsScreen(navController = navController, id = id)
                 }
             }
@@ -132,7 +132,7 @@ fun MainScreen(navController: NavHostController = rememberNavController()) {
                         }
                     )
                 ) { backStackEntry ->
-                    val id = backStackEntry.arguments?.getInt("id") ?: -1
+                    val id = backStackEntry.arguments?.getInt("id")
                     PlantDetailsScreen(
                         navController = navController,
                         id = id

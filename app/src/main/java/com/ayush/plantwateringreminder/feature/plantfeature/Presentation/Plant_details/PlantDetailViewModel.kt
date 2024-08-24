@@ -3,7 +3,6 @@ package com.ayush.plantwateringreminder.feature.plantfeature.Presentation.Plant_
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.datastore.core.DataStore
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,12 +13,8 @@ import com.ayush.plantwateringreminder.feature.plantfeature.Presentation.Plant_d
 import com.ayush.plantwateringreminder.feature.plantfeature.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import java.util.prefs.Preferences
 import javax.inject.Inject
 
 @HiltViewModel
@@ -56,7 +51,6 @@ class PlantDetailViewModel @Inject constructor(
                         isLoading = false,
                         error = null
                     )
-
                 }
                 else -> Unit
             }
