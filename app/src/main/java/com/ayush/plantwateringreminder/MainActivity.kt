@@ -31,10 +31,9 @@ import androidx.navigation.navArgument
 import com.ayush.plantwateringreminder.feature.plantfeature.Presentation.Plant_details.PlantDetailsScreen
 import com.ayush.plantwateringreminder.feature.plantfeature.Presentation.Plant_list.PlantScreen
 import com.ayush.plantwateringreminder.feature.Screens
-import com.ayush.plantwateringreminder.feature.WaterRemindinngFeature.Presentation.My_Plants.LikePlantScreen
-import com.ayush.plantwateringreminder.feature.WaterRemindinngFeature.Presentation.My_Plants.component.BottomNavigationItem
-import com.ayush.plantwateringreminder.feature.WaterRemindinngFeature.Presentation.My_Plants_Details.Component.LikePlantDetailsItem
-import com.ayush.plantwateringreminder.feature.WaterRemindinngFeature.Presentation.My_Plants_Details.LikePlantDetailsScreen
+import com.ayush.plantwateringreminder.feature.PlantDatabase.Presentation.My_Plants.LikePlantScreen
+import com.ayush.plantwateringreminder.feature.PlantDatabase.Presentation.My_Plants.component.BottomNavigationItem
+import com.ayush.plantwateringreminder.feature.PlantDatabase.Presentation.My_Plants_Details.LikePlantDetailsScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

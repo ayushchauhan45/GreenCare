@@ -2,7 +2,7 @@ package com.ayush.plantwateringreminder.feature.plantfeature.Data.Remote
 
 import com.ayush.plantwateringreminder.feature.plantfeature.Data.Remote.Model.PlantDtoDetail
 import com.ayush.plantwateringreminder.feature.plantfeature.Data.Remote.Model.PlantResponse
-import com.ayush.plantwateringreminder.feature.plantfeature.util.Companion.API_KEY
+import com.ayush.plantwateringreminder.feature.util.Companion.API_KEY
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

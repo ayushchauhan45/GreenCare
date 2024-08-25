@@ -1,6 +1,6 @@
 package com.ayush.plantwateringreminder.feature.plantfeature.Data.Remote.Mapper
 
-import com.ayush.plantwateringreminder.feature.WaterRemindinngFeature.Domain.Model.PlantEntity
+import com.ayush.plantwateringreminder.feature.PlantDatabase.Domain.Model.PlantEntity
 import com.ayush.plantwateringreminder.feature.plantfeature.Domain.Model.PlantDetails
 
 fun PlantDetails.toEntity(): PlantEntity {

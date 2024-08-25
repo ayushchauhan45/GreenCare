@@ -3,7 +3,7 @@ package com.ayush.plantwateringreminder.feature.plantfeature.DI
 import com.ayush.plantwateringreminder.feature.plantfeature.Data.Remote.PlantApi
 import com.ayush.plantwateringreminder.feature.plantfeature.Data.Remote.Repository.PlantRepositoryImpl
 import com.ayush.plantwateringreminder.feature.plantfeature.Domain.Repository.PlantRepository
-import com.ayush.plantwateringreminder.feature.plantfeature.util.Companion.BASE_URL
+import com.ayush.plantwateringreminder.feature.util.Companion.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

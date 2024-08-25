@@ -6,7 +6,7 @@ import com.ayush.plantwateringreminder.feature.plantfeature.Data.Remote.PlantApi
 import com.ayush.plantwateringreminder.feature.plantfeature.Domain.Model.Plant
 import com.ayush.plantwateringreminder.feature.plantfeature.Domain.Model.PlantDetails
 import com.ayush.plantwateringreminder.feature.plantfeature.Domain.Repository.PlantRepository
-import com.ayush.plantwateringreminder.feature.plantfeature.util.Resource
+import com.ayush.plantwateringreminder.feature.util.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
