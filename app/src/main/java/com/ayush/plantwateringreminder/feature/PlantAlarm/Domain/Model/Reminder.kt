@@ -14,9 +14,25 @@ import com.ayush.plantwateringreminder.feature.PlantDatabase.Domain.Model.PlantE
         onDelete = ForeignKey.CASCADE)
     ],
     indices = [Index("id")])
-data class PlantReminder(
+data class Reminder(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val plantId: Int,
-    val reminderTime:Long
-)
+    val reminderTime:Long,
+    val daysOfWeek: Int
+){
+    companion object{
+        val MONDAY = 1 shl 0
+        val TUESDAY = 1 shl 1
+        val WEDNESDAY = 1 shl 2
+        val THURSDAY = 1 shl 3
+        val FRIDAY = 1 shl 4
+        val SATURDAY = 1 shl 5
+        val SUNDAY = 1 shl 6
+
+        fun isDaysSelected(daysOfWeekBitmask: Int, dayBitmask: Int):Boolean {
+         return daysOfWeekBitmask and dayBitmask != 0
+        }
+    }
+
+}

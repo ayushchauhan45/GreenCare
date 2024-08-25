@@ -2,10 +2,10 @@ package com.ayush.plantwateringreminder.feature.PlantAlarm.Data.DataSource
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.ayush.plantwateringreminder.feature.PlantAlarm.Domain.Model.PlantReminder
+import com.ayush.plantwateringreminder.feature.PlantAlarm.Domain.Model.Reminder
 
 @Database(
-    entities = [PlantReminder::class],
+    entities = [Reminder::class],
     version = 1,
     exportSchema = false
 )

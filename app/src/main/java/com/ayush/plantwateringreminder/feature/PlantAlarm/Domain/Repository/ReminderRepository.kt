@@ -1,11 +1,11 @@
 package com.ayush.plantwateringreminder.feature.PlantAlarm.Domain.Repository
 
-import com.ayush.plantwateringreminder.feature.PlantAlarm.Domain.Model.PlantReminder
+import com.ayush.plantwateringreminder.feature.PlantAlarm.Domain.Model.Reminder
 
 interface ReminderRepository {
-    suspend fun insertReminder(reminder: PlantReminder)
+    suspend fun insertReminder(reminder: Reminder)
 
-    suspend fun getReminderById(id:Int): PlantReminder?
+    suspend fun getReminderById(id:Int): Reminder?
 
-    suspend fun deleteReminder(reminder: PlantReminder)
+    suspend fun deleteReminder(reminder: Reminder)
 }

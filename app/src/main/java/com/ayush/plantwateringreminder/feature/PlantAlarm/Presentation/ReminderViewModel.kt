@@ -6,12 +6,10 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ayush.plantwateringreminder.feature.PlantAlarm.Domain.Model.PlantReminder
 import com.ayush.plantwateringreminder.feature.PlantAlarm.Domain.Repository.ReminderRepository
 import com.ayush.plantwateringreminder.feature.PlantAlarm.Presentation.Component.ReminderEvent
 import com.ayush.plantwateringreminder.feature.PlantAlarm.Presentation.Component.ReminderState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
