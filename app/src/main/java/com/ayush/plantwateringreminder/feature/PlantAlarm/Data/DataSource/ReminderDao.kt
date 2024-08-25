@@ -15,7 +15,7 @@ interface ReminderDao {
     suspend fun insertReminder(reminder:PlantReminder)
 
     @Query("Select * from Reminder where id = :id")
-    fun getReminderById(id:Int) : Flow<PlantReminder>
+    suspend fun getReminderById(id:Int) : PlantReminder?
 
     @Delete
     suspend fun deleteReminder(reminder: PlantReminder)

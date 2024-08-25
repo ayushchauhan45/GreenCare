@@ -12,8 +12,8 @@ class ReminderRepositoryImpl(
          dao.insertReminder(reminder)
     }
 
-    override fun getReminderById(id: Int): Flow<PlantReminder> {
-        return dao.getReminderById(id)
+    override suspend fun getReminderById(id: Int): PlantReminder? {
+        return  dao.getReminderById(id)
     }
 
     override suspend fun deleteReminder(reminder: PlantReminder) {
