@@ -3,4 +3,5 @@ package com.ayush.plantwateringreminder.feature.PlantAlarm.Presentation.Componen
 sealed class ReminderEvent {
     data object AddReminder : ReminderEvent()
     data object DeleteReminder: ReminderEvent()
+    data object UpdateReminder: ReminderEvent()
 }

@@ -49,6 +49,14 @@ class ReminderViewModel @Inject constructor(
                     )
                 }
             }
+
+            ReminderEvent.UpdateReminder -> {
+                viewModelScope.launch {
+                    repository.updateReminder(
+                        state.reminder ?: throw Exception("Reminder not Found")
+                    )
+                }
+            }
         }
     }
 

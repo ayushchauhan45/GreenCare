@@ -18,6 +18,7 @@ data class Reminder(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val plantId: Int,
+    val isWatered: Boolean,
     val reminderTime:Long,
     val daysOfWeek: Int
 ){

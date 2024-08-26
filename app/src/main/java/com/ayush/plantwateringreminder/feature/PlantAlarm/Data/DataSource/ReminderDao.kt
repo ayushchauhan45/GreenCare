@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.ayush.plantwateringreminder.feature.PlantAlarm.Domain.Model.Reminder
 
 @Dao
@@ -18,5 +19,10 @@ interface ReminderDao {
 
     @Delete
     suspend fun deleteReminder(reminder: Reminder)
+
+    @Update
+    suspend fun updateReminder(reminder: Reminder)
+
+
 
 }
