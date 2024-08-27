@@ -3,6 +3,7 @@ package com.ayush.plantwateringreminder.feature.PlantAlarm.Data.Repository
 import com.ayush.plantwateringreminder.feature.PlantAlarm.Data.DataSource.ReminderDao
 import com.ayush.plantwateringreminder.feature.PlantAlarm.Domain.Model.Reminder
 import com.ayush.plantwateringreminder.feature.PlantAlarm.Domain.Repository.ReminderRepository
+import kotlinx.coroutines.flow.Flow
 
 class ReminderRepositoryImpl(
     private val dao: ReminderDao
@@ -11,8 +12,8 @@ class ReminderRepositoryImpl(
          dao.insertReminder(reminder)
     }
 
-    override suspend fun getReminderById(id: Int): Reminder? {
-        return  dao.getReminderById(id)
+    override  fun getReminder(): Flow<List<Reminder>> {
+        return  dao.getReminder()
     }
 
     override suspend fun deleteReminder(reminder: Reminder) {

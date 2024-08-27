@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.ayush.plantwateringreminder.feature.PlantAlarm.Domain.Model.Reminder
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ReminderDao {
@@ -14,8 +15,8 @@ interface ReminderDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertReminder(reminder:Reminder)
 
-    @Query("Select * from Reminder where id = :id")
-    suspend fun getReminderById(id:Int) : Reminder?
+    @Query("Select * from Reminder ")
+     fun getReminder() : Flow<List<Reminder>>
 
     @Delete
     suspend fun deleteReminder(reminder: Reminder)

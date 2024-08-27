@@ -37,7 +37,8 @@ import com.ayush.plantwateringreminder.feature.plantfeature.Presentation.Plant_d
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun LikePlantDetailsItem(
-    plantEntity: PlantEntity) {
+    plantEntity: PlantEntity,
+    onSheetCLick:()->Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()

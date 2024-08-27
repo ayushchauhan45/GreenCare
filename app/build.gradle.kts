@@ -85,8 +85,13 @@ dependencies {
     implementation (libs.androidx.navigation.compose)
     implementation (libs.androidx.hilt.navigation.compose)
     implementation(libs.play.services.base)
+    implementation(libs.androidx.material)
 
 
+    implementation(libs.ui)
+
+
+    implementation(libs.material3)
 
     // Coroutines
     implementation (libs.kotlinx.coroutines.core)

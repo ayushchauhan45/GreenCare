@@ -3,5 +3,5 @@ package com.ayush.plantwateringreminder.feature.PlantAlarm.Presentation.Componen
 import com.ayush.plantwateringreminder.feature.PlantAlarm.Domain.Model.Reminder
 
 data class ReminderState(
-    val reminder: Reminder? = null
+    val reminder: List<Reminder> = emptyList()
 )

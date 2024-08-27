@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.media.MediaPlayer
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -35,7 +36,12 @@ class ReminderReceiver:BroadcastReceiver() {
     @Inject
     lateinit var alarmUtils: AlarmUtils
 
+    @Inject
+    private lateinit var mediaPlayer: MediaPlayer
+
     override  fun onReceive(context: Context, intent: Intent) {
+        mediaPlayer = MediaPlayer.create(context, R.raw.alarm)
+
        val reminderJson =intent.getStringExtra(REMINDER)
        val reminder = Gson().fromJson(reminderJson , Reminder::class.java)
 
@@ -105,6 +111,8 @@ class ReminderReceiver:BroadcastReceiver() {
 
                     NotificationManagerCompat.from(context).notify(1, notification)
                 }
+                 mediaPlayer.release()
+                 mediaPlayer.start()
             }
         }
 

@@ -6,10 +6,15 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.ayush.plantwateringreminder.feature.PlantAlarm.Domain.Model.Reminder
 import com.ayush.plantwateringreminder.feature.PlantAlarm.Domain.Repository.ReminderRepository
-import com.ayush.plantwateringreminder.feature.PlantAlarm.Presentation.Component.ReminderEvent
 import com.ayush.plantwateringreminder.feature.PlantAlarm.Presentation.Component.ReminderState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.forEach
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,47 +25,40 @@ class ReminderViewModel @Inject constructor(
 ):ViewModel(){
 
     var state by mutableStateOf(ReminderState())
+    private var reminderJob : Job? = null
 
     init {
-        savedStateHandle.get<Int>("id")?.let {id->
-            viewModelScope.launch {
-                repository.getReminderById(id)?.also {
-                    state = state.copy(
-                        reminder = it
-                    )
-                }
-            }
-        }
+        getReminders()
     }
 
-    fun onReminderEvent(event: ReminderEvent){
-        when(event){
-            ReminderEvent.AddReminder -> {
-                viewModelScope.launch {
-                    repository.insertReminder(
-                        state.reminder ?: throw Exception("Reminder not found")
-                    )
-                }
-            }
-            ReminderEvent.DeleteReminder -> {
-                viewModelScope.launch {
-                    repository.deleteReminder(
-                        state.reminder ?: throw Exception("Reminder not found")
-                    )
-                }
-            }
 
-            ReminderEvent.UpdateReminder -> {
-                viewModelScope.launch {
-                    repository.updateReminder(
-                        state.reminder ?: throw Exception("Reminder not Found")
-                    )
-                }
-            }
+    fun addReminder(reminder:Reminder){
+        viewModelScope.launch {
+            repository.insertReminder(reminder)
         }
+    }
+    fun deleteReminder(reminder:Reminder){
+        viewModelScope.launch {
+            repository.deleteReminder(reminder)
+        }
+    }
+    fun updateReminder(reminder:Reminder){
+        viewModelScope.launch {
+            repository.updateReminder(reminder)
+        }
+    }
+     private fun getReminders(){
+             reminderJob?.cancel()
+             reminderJob = repository.getReminder().onEach { reminder->
+                 state= state.copy(
+                     reminder= reminder
+                 )
+             }.launchIn(viewModelScope)
+     }
+
+
     }
 
 
 
 
-}
