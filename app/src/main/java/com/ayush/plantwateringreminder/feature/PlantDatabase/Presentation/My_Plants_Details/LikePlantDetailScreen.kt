@@ -101,7 +101,8 @@ fun LikePlantDetailsScreen(
             ) {
 
                     state.myPlant?.let { plantEntity ->
-                        LikePlantDetailsItem(plantEntity = plantEntity)
+                        LikePlantDetailsItem(plantEntity = plantEntity,
+                            onSheetCLick = {})
                     }
                     Spacer(modifier = Modifier.height(30.dp))
 
