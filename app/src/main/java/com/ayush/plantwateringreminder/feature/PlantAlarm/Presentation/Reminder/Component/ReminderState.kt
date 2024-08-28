@@ -1,4 +1,4 @@
-package com.ayush.plantwateringreminder.feature.PlantAlarm.Presentation.Component
+package com.ayush.plantwateringreminder.feature.PlantAlarm.Presentation.Reminder.Component
 
 import com.ayush.plantwateringreminder.feature.PlantAlarm.Domain.Model.Reminder
 

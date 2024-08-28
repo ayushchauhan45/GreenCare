@@ -2,8 +2,10 @@ package com.ayush.plantwateringreminder.feature.PlantAlarm.DI
 
 import android.app.Application
 import androidx.room.Room
+import com.ayush.plantwateringreminder.feature.PlantAlarm.Data.Alarm.AlarmUtilImpl
 import com.ayush.plantwateringreminder.feature.PlantAlarm.Data.DataSource.ReminderDataBase
 import com.ayush.plantwateringreminder.feature.PlantAlarm.Data.Repository.ReminderRepositoryImpl
+import com.ayush.plantwateringreminder.feature.PlantAlarm.Domain.Alarm.AlarmUtils
 import com.ayush.plantwateringreminder.feature.PlantAlarm.Domain.Repository.ReminderRepository
 import dagger.Module
 import dagger.Provides
@@ -29,6 +31,12 @@ object ReminderModule {
     @Singleton
     fun provideReminderRepository(db:ReminderDataBase): ReminderRepository {
         return  ReminderRepositoryImpl(db.reminderDao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAlarmUtil(): AlarmUtils {
+        return AlarmUtilImpl()
     }
 
 }

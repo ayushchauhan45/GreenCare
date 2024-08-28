@@ -23,7 +23,4 @@ interface ReminderDao {
 
     @Update
     suspend fun updateReminder(reminder: Reminder)
-
-
-
 }

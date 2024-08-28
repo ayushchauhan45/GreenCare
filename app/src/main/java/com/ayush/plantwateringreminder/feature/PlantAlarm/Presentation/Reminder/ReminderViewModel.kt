@@ -1,18 +1,18 @@
-package com.ayush.plantwateringreminder.feature.PlantAlarm.Presentation
+package com.ayush.plantwateringreminder.feature.PlantAlarm.Presentation.Reminder
 
+import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
+import com.ayush.plantwateringreminder.feature.PlantAlarm.Domain.Alarm.AlarmUtils
 import com.ayush.plantwateringreminder.feature.PlantAlarm.Domain.Model.Reminder
 import com.ayush.plantwateringreminder.feature.PlantAlarm.Domain.Repository.ReminderRepository
-import com.ayush.plantwateringreminder.feature.PlantAlarm.Presentation.Component.ReminderState
+import com.ayush.plantwateringreminder.feature.PlantAlarm.Presentation.Reminder.Component.ReminderState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.forEach
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -21,6 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ReminderViewModel @Inject constructor(
     private val repository: ReminderRepository,
+    private val alarmUtils: AlarmUtils,
     private val savedStateHandle: SavedStateHandle
 ):ViewModel(){
 
@@ -42,11 +43,7 @@ class ReminderViewModel @Inject constructor(
             repository.deleteReminder(reminder)
         }
     }
-    fun updateReminder(reminder:Reminder){
-        viewModelScope.launch {
-            repository.updateReminder(reminder)
-        }
-    }
+
      private fun getReminders(){
              reminderJob?.cancel()
              reminderJob = repository.getReminder().onEach { reminder->
@@ -55,6 +52,14 @@ class ReminderViewModel @Inject constructor(
                  )
              }.launchIn(viewModelScope)
      }
+
+    fun scheduleAlarm(context: Context, reminder: Reminder){
+        alarmUtils.scheduleAlarm(context , reminder)
+    }
+
+    fun cancelAlarm(context: Context, reminder: Reminder){
+        alarmUtils.cancelAlarm(context , reminder)
+    }
 
 
     }

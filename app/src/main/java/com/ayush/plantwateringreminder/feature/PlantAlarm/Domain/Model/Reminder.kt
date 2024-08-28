@@ -13,7 +13,7 @@ import com.ayush.plantwateringreminder.feature.PlantDatabase.Domain.Model.PlantE
         childColumns = ["plantId"],
         onDelete = ForeignKey.CASCADE)
     ],
-    indices = [Index("id")])
+    indices = [Index(value = ["plantId"])])
 data class Reminder(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,

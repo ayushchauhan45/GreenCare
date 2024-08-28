@@ -1,4 +1,4 @@
-package com.ayush.plantwateringreminder.feature.PlantAlarm.Presentation
+package com.ayush.plantwateringreminder.feature.PlantAlarm.Presentation.Reminder
 
 //noinspection UsingMaterialAndMaterial3Libraries
 import android.annotation.SuppressLint
@@ -18,6 +18,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,12 +31,15 @@ import com.ayush.plantwateringreminder.feature.PlantAlarm.Domain.Model.Reminder
 @SuppressLint("SuspiciousIndentation")
 @Composable
 fun AlarmBottomSheetItem(
-    time:String,
+    time: String,
     selectedDaysOfWeek: Int,
-    onTimeClick : ()->Unit,
-    onDayClick: ()->Unit,
-    onClick: ()->Unit
-){
+    onTimeClick: () -> Unit,
+    onClick: (Int) -> Unit
+) {
+    val selectedDay  = remember{
+        mutableStateOf(0)
+    }
+
     Column(
             modifier = Modifier
                 .padding(16.dp)
@@ -48,21 +53,6 @@ fun AlarmBottomSheetItem(
                 fontWeight = FontWeight.SemiBold
             )
             Spacer(modifier = Modifier.height(24.dp))
-
-            Row{
-             OutlinedTextField(value = time, onValueChange = {},
-                 modifier = Modifier
-                     .width(200.dp)
-                     .padding(8.dp)
-                     .clickable {
-                         onTimeClick.invoke()
-                     },enabled = false)
-                Spacer(modifier = Modifier.width(10.dp))
-                Text(text = "Choose the time for watering",
-                    fontWeight = FontWeight.Thin)
-
-            }
-            Spacer(modifier = Modifier.height(18.dp))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -85,23 +75,47 @@ fun AlarmBottomSheetItem(
                     Text(text = label, modifier = Modifier.padding(8.dp).background(
                         if(isSelected) Color.White else Color.LightGray,
                         shape = CircleShape
-                    ).clickable { onDayClick.invoke() }.padding(8.dp),
+                    ).clickable {
+                        selectedDay.value = if(isSelected){
+                            selectedDaysOfWeek and dayBitmask.inv()
+                        }else{
+                            selectedDaysOfWeek or  dayBitmask
+                        }
+                    }.padding(8.dp),
                         color = if(isSelected) Color.Black else Color.LightGray
-
                     )
+
+
                 }
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(text = "Choose the day for watering",
                     fontWeight = FontWeight.Thin
                 )
-
             }
+        Spacer(modifier = Modifier.height(18.dp))
+
+
+        Row{
+            OutlinedTextField(value = time, onValueChange = {},
+                modifier = Modifier
+                    .width(200.dp)
+                    .padding(8.dp)
+                    .clickable {
+                        onTimeClick.invoke()
+                    },enabled = false)
+            Spacer(modifier = Modifier.width(10.dp))
+            Text(text = "Choose the time for watering",
+                fontWeight = FontWeight.Thin)
+
+        }
 
             Column(
                 verticalArrangement = Arrangement.Bottom,
                 horizontalAlignment = Alignment.End
             ) {
-                Button(onClick = { onClick.invoke() },
+                Button(onClick = { onClick.invoke(
+                    selectedDay.value
+                ) },
                     modifier = Modifier.padding(
                         end = 25.dp,
                         bottom = 25.dp

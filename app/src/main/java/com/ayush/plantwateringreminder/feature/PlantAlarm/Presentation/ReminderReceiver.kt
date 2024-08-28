@@ -28,7 +28,9 @@ const val DONE = "DONE"
 const val REJECT = "REJECT"
 
 @AndroidEntryPoint
-class ReminderReceiver:BroadcastReceiver() {
+class ReminderReceiver @Inject constructor(
+     var mediaPlayer: MediaPlayer
+):BroadcastReceiver() {
 
     @Inject
     lateinit var updateReminder: ReminderRepository
@@ -36,8 +38,7 @@ class ReminderReceiver:BroadcastReceiver() {
     @Inject
     lateinit var alarmUtils: AlarmUtils
 
-    @Inject
-    private lateinit var mediaPlayer: MediaPlayer
+
 
     override  fun onReceive(context: Context, intent: Intent) {
         mediaPlayer = MediaPlayer.create(context, R.raw.alarm)
@@ -111,8 +112,11 @@ class ReminderReceiver:BroadcastReceiver() {
 
                     NotificationManagerCompat.from(context).notify(1, notification)
                 }
-                 mediaPlayer.release()
-                 mediaPlayer.start()
+                mediaPlayer.setOnCompletionListener {
+                    mediaPlayer.release()
+                    mediaPlayer.start()
+                }
+
             }
         }
 

@@ -4,8 +4,9 @@ import com.ayush.plantwateringreminder.feature.PlantAlarm.Data.DataSource.Remind
 import com.ayush.plantwateringreminder.feature.PlantAlarm.Domain.Model.Reminder
 import com.ayush.plantwateringreminder.feature.PlantAlarm.Domain.Repository.ReminderRepository
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class ReminderRepositoryImpl(
+class ReminderRepositoryImpl @Inject constructor(
     private val dao: ReminderDao
 ): ReminderRepository{
     override suspend fun insertReminder(reminder: Reminder) {
@@ -23,4 +24,6 @@ class ReminderRepositoryImpl(
     override suspend fun updateReminder(reminder: Reminder) {
         dao.updateReminder(reminder)
     }
+
+
 }
