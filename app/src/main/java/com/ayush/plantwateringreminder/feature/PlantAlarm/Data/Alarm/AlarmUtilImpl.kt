@@ -1,4 +1,4 @@
-package com.ayush.plantwateringreminder .feature.PlantAlarm.Data.Alarm
+package com.ayush.plantwateringreminder.feature.PlantAlarm.Data.Alarm
 
 import android.app.AlarmManager
 import android.app.PendingIntent
