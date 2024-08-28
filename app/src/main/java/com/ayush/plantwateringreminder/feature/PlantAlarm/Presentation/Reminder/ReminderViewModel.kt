@@ -21,8 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ReminderViewModel @Inject constructor(
     private val repository: ReminderRepository,
-    private val alarmUtils: AlarmUtils,
-    private val savedStateHandle: SavedStateHandle
+    private val alarmUtils: AlarmUtils
 ):ViewModel(){
 
     var state by mutableStateOf(ReminderState())
