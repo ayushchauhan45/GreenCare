@@ -19,6 +19,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ExperimentalMaterialApi
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.ModalBottomSheetLayout
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.ModalBottomSheetValue
@@ -37,6 +38,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material3.TimePicker
 import androidx.compose.material3.rememberTimePickerState
@@ -58,16 +60,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.ayush.plantwateringreminder.feature.PlantAlarm.Domain.Alarm.AlarmUtils
 import com.ayush.plantwateringreminder.feature.PlantAlarm.Domain.Model.Reminder
 import com.ayush.plantwateringreminder.feature.PlantAlarm.Presentation.Reminder.AlarmBottomSheetItem
 import com.ayush.plantwateringreminder.feature.PlantAlarm.Presentation.Reminder.ReminderViewModel
 import com.ayush.plantwateringreminder.feature.PlantDatabase.Presentation.My_Plants_Details.Component.LikePlantDetailsItem
 import kotlinx.coroutines.launch
-import java.text.Format
 import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Calendar.MONDAY
 import java.util.Locale
 
 
@@ -106,150 +105,143 @@ fun LikePlantDetailsScreen(
     val timeInMillis = remember {
         mutableStateOf(0L)
     }
-
-
+    val initialSelectedDaysOfWeek = 0
 
     ModalBottomSheetLayout(sheetState = sheetState,
         sheetContent = {
-            val reminder= reminderState.reminder.firstOrNull()
-            if(reminder != null) {
-                AlarmBottomSheetItem(
+                 AlarmBottomSheetItem(
+                     time = format.format(timeInMillis.value),
+                     selectedDaysOfWeek = initialSelectedDaysOfWeek,
+                     onTimeClick = {
+                         isTimePickerVisible.value = true
+                     },
+                     onClick = { selectedDay ->
+                         val reminder = Reminder(
+                             isWatered = false,
+                             reminderTime = timeInMillis.value,
+                             daysOfWeek = selectedDay,
+                             plantId = state.myPlant?.id
+                                 ?: throw Exception("Plant not found")
+                         )
+                         reminderViewModel.addReminder(reminder)
+                         reminderViewModel.scheduleAlarm(context, reminder)
+                         scope.launch {
+                             sheetState.hide()
+                         }
+                     }
+                 )
 
-                    time = format.format(reminder.reminderTime),
-                    selectedDaysOfWeek = reminder.daysOfWeek,
-                    onTimeClick = {
-                        isTimePickerVisible.value = true
-                    },
-                    onClick = { selectedDay ->
-                        reminderViewModel.addReminder(
-                            Reminder(
-                                isWatered = false,
-                                reminderTime = timeInMillis.value,
-                                daysOfWeek = selectedDay,
-                                plantId = state.myPlant?.id
-                                    ?: throw Exception("Plant not found")
-                            )
+        }
+    )
+    {
+
+    Scaffold(
+        modifier = Modifier
+            .fillMaxSize()
+            .nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            TopAppBar(
+                title = { Text(text = "Plant Details") },
+                navigationIcon = {
+                    IconButton(onClick = {
+                        navController.popBackStack()
+                    }) {
+                        Icon(
+                            imageVector = Icons.Filled.ArrowBack,
+                            contentDescription = null
                         )
-                        reminderViewModel.scheduleAlarm(context, reminder)
-                        scope.launch {
-                            sheetState.hide()
+                    }
+                },
+                actions = {
+                    IconButton(onClick = {
+                        isLiked = !isLiked
+                    }
+                    ) {
+                        Icon(
+                            imageVector = if (isLiked) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+                            contentDescription = null
+                        )
+                    }
+                },
+                scrollBehavior = scrollBehavior
+            )
+        }
+    ) { padding ->
+
+        if (isTimePickerVisible.value) {
+            Dialog(onDismissRequest = { }) {
+                Column {
+                    TimePicker(state = timePickerState)
+                    Row {
+                        Button(onClick = {
+                            isTimePickerVisible.value = isTimePickerVisible.value.not()
+                        }) {
+                            Text(text = "Cancel")
+                        }
+                        Button(onClick = {
+                            val calendar = Calendar.getInstance().apply {
+                                set(Calendar.HOUR_OF_DAY, timePickerState.hour)
+                                set(Calendar.MINUTE, timePickerState.minute)
+                            }
+                            timeInMillis.value = calendar.timeInMillis
+                            isTimePickerVisible.value = false
+                        }) {
+                            Text(text = "Confirm")
                         }
                     }
-                )
+                }
             }
-        })
-    {
-        Scaffold(
+        }
+
+        Column(
             modifier = Modifier
                 .fillMaxSize()
-                .nestedScroll(scrollBehavior.nestedScrollConnection),
-            topBar = {
-                TopAppBar(
-                    title = { Text(text = "Plant Details") },
-                    navigationIcon = {
-                        IconButton(onClick = {
-                            navController.popBackStack()
-                        }) {
-                            Icon(
-                                imageVector = Icons.Filled.ArrowBack,
-                                contentDescription = null
-                            )
-                        }
-                    },
-                    actions = {
-                        IconButton(onClick = {
-                            isLiked = !isLiked
-                        }
-                        ) {
-                            Icon(
-                                imageVector = if (isLiked) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
-                                contentDescription = null
-                            )
-                        }
-                    },
-                    scrollBehavior = scrollBehavior
-                )
-            }
-        ) { padding ->
-
-            if (isTimePickerVisible.value) {
-                Dialog(onDismissRequest = { }) {
-                    Column {
-                        TimePicker(state = timePickerState)
-                        Row {
-                            Button(onClick = {
-                                isTimePickerVisible.value = isTimePickerVisible.value.not()
-                            }) {
-                                Text(text = "Cancel")
-                            }
-                            Button(onClick = {
-                                val calendar = Calendar.getInstance().apply {
-                                    set(Calendar.HOUR_OF_DAY, timePickerState.hour)
-                                    set(Calendar.MINUTE, timePickerState.minute)
-                                }
-                                timeInMillis.value = calendar.timeInMillis
-                                isTimePickerVisible.value = false
-                            }) {
-                                Text(text = "Confirm")
-                            }
-                        }
-                    }
+                .padding(padding)
+                .verticalScroll(rememberScrollState())
+        ) {
+            Button(onClick = {
+                scope.launch {
+                    sheetState.show()
                 }
+            }, modifier = Modifier.fillMaxWidth()) {
+                Text(text = "Schedule the alarm")
             }
+            Spacer(modifier = Modifier.height(20.dp))
 
+            state.myPlant?.let { plantEntity ->
+                LikePlantDetailsItem(plantEntity = plantEntity)
+            }
+            Spacer(modifier = Modifier.height(30.dp))
 
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding)
-                    .verticalScroll(rememberScrollState())
-            ) {
-
-                state.myPlant?.let { plantEntity ->
-                    LikePlantDetailsItem(plantEntity = plantEntity)
-                }
-                Spacer(modifier = Modifier.height(30.dp))
-
-                Text(
-                    text = "Schedule Watering Alarm",
-                    Modifier
-                        .size(40.dp)
-                        .padding(
-                            start = 20.dp
-                        )
-                )
-                Spacer(modifier = Modifier.height(30.dp))
+            Text(
+                text = "Schedule Watering Alarm",
+                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.headlineSmall,
+                modifier = Modifier.padding(start = 5.dp)
+            )
+            Spacer(modifier = Modifier.height(50.dp))
 
                 val reminder = reminderState.reminder.firstOrNull()
                 if (reminder != null) {
-                    AlarmCard(reminder = reminder , onClickable = {
+                    AlarmCard(reminder = reminder, onClickable = {
                         scope.launch {
                             sheetState.show()
                         }
                     }, onDeleteClick = {
-                            reminderViewModel.cancelAlarm(context, reminder)
-                            reminderViewModel.deleteReminder(reminder)
+                        reminderViewModel.cancelAlarm(context, reminder)
+                        reminderViewModel.deleteReminder(reminder)
                     },
-                        time = "Reminder Time: ${format.format(reminder.reminderTime)}")
+                        time = "Reminder Time: ${format.format(reminder.reminderTime)}"
+                    )
 
                 }
-            }
 
 
 
-                Spacer(modifier = Modifier.height(20.dp))
-
-                Button(onClick = {
-                    scope.launch {
-                        sheetState.show()
-                    }
-                }, modifier = Modifier.fillMaxWidth()) {
-                    Text(text = "Schedule the alarm")
-                }
-            }
         }
     }
-
+ }
+}
 
 @Composable
 fun AlarmCard(

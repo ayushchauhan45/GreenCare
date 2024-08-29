@@ -73,7 +73,7 @@ fun AlarmBottomSheetItem(
 
                 val isSelected = Reminder.isDaysSelected(selectedDaysOfWeek,dayBitmask)
                     Text(text = label, modifier = Modifier.padding(8.dp).background(
-                        if(isSelected) Color.White else Color.LightGray,
+                        if(isSelected) Color.LightGray else Color.White,
                         shape = CircleShape
                     ).clickable {
                         selectedDay.value = if(isSelected){
@@ -85,17 +85,15 @@ fun AlarmBottomSheetItem(
                         color = if(isSelected) Color.Black else Color.LightGray
                     )
 
-
                 }
-                Spacer(modifier = Modifier.width(10.dp))
-                Text(text = "Choose the day for watering",
-                    fontWeight = FontWeight.Thin
-                )
             }
         Spacer(modifier = Modifier.height(18.dp))
 
 
-        Row{
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ){
             OutlinedTextField(value = time, onValueChange = {},
                 modifier = Modifier
                     .width(200.dp)
@@ -109,11 +107,9 @@ fun AlarmBottomSheetItem(
 
         }
 
-            Column(
-                verticalArrangement = Arrangement.Bottom,
-                horizontalAlignment = Alignment.End
-            ) {
-                Button(onClick = { onClick.invoke(
+        Spacer(modifier = Modifier.height(32.dp))
+
+        Button(onClick = { onClick.invoke(
                     selectedDay.value
                 ) },
                     modifier = Modifier.padding(
@@ -122,8 +118,5 @@ fun AlarmBottomSheetItem(
                     )) {
                     Text(text = "Save")
                 }
-            }
-        Spacer(modifier = Modifier.height(32.dp))
-
         }
 }
