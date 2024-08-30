@@ -20,7 +20,9 @@ object AppModule {
     fun providePlantDataBase(app:Application):PlantDatabase{
         return Room.databaseBuilder(app,
             PlantDatabase::class.java,
-            PlantDatabase.DATABASE_NAME).build()
+            PlantDatabase.DATABASE_NAME)
+            .fallbackToDestructiveMigration()
+            .build()
     }
 
     @Provides

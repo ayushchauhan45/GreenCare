@@ -2,6 +2,7 @@ package com.ayush.plantwateringreminder.feature.PlantAlarm.Presentation.Reminder
 
 //noinspection UsingMaterialAndMaterial3Libraries
 import android.annotation.SuppressLint
+import android.widget.ToggleButton
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -16,6 +17,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -32,14 +34,13 @@ import com.ayush.plantwateringreminder.feature.PlantAlarm.Domain.Model.Reminder
 @Composable
 fun AlarmBottomSheetItem(
     time: String,
-    selectedDaysOfWeek: Int,
     onTimeClick: () -> Unit,
-    onClick: (Int) -> Unit
+    onClick: (Boolean) -> Unit
 ) {
-    val selectedDay  = remember{
-        mutableStateOf(0)
-    }
 
+   val isChecked = remember {
+       mutableStateOf(false)
+   }
     Column(
             modifier = Modifier
                 .padding(16.dp)
@@ -48,70 +49,45 @@ fun AlarmBottomSheetItem(
         ) {
 
             Text(text = "Set a Reminder",
-                color = Color(0xFF038530),
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.SemiBold
             )
             Spacer(modifier = Modifier.height(24.dp))
+        Text(text = "Choose the time for watering",
+            fontWeight = FontWeight.SemiBold)
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceAround
-            ){
+        Spacer(modifier = Modifier.height(20.dp))
 
-                val day = listOf(
-                    "M" to Reminder.MONDAY,
-                    "T" to Reminder.TUESDAY,
-                    "W" to Reminder.WEDNESDAY,
-                    "Th" to Reminder.THURSDAY,
-                    "F" to Reminder.FRIDAY,
-                    "S" to Reminder.SATURDAY,
-                    "S" to Reminder.SUNDAY
-                )
-
-                day.forEach {(label, dayBitmask)->
-
-                val isSelected = Reminder.isDaysSelected(selectedDaysOfWeek,dayBitmask)
-                    Text(text = label, modifier = Modifier.padding(8.dp).background(
-                        if(isSelected) Color.LightGray else Color.White,
-                        shape = CircleShape
-                    ).clickable {
-                        selectedDay.value = if(isSelected){
-                            selectedDaysOfWeek and dayBitmask.inv()
-                        }else{
-                            selectedDaysOfWeek or  dayBitmask
-                        }
-                    }.padding(8.dp),
-                        color = if(isSelected) Color.Black else Color.LightGray
-                    )
-
-                }
-            }
-        Spacer(modifier = Modifier.height(18.dp))
-
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ){
-            OutlinedTextField(value = time, onValueChange = {},
+        OutlinedTextField(value = time, onValueChange = {},
                 modifier = Modifier
                     .width(200.dp)
                     .padding(8.dp)
                     .clickable {
                         onTimeClick.invoke()
                     },enabled = false)
-            Spacer(modifier = Modifier.width(10.dp))
-            Text(text = "Choose the time for watering",
-                fontWeight = FontWeight.Thin)
+
+        Spacer(modifier = Modifier.height(18.dp))
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceAround
+        ){
+            Text(text = "Schedule Alarm ",
+                fontWeight = FontWeight.SemiBold)
+
+            Spacer(modifier = Modifier.width(16.dp))
+
+            Switch(checked = isChecked.value, onCheckedChange = {
+                isChecked.value = it
+            })
 
         }
 
         Spacer(modifier = Modifier.height(32.dp))
 
         Button(onClick = { onClick.invoke(
-                    selectedDay.value
-                ) },
+            isChecked.value
+        ) },
                     modifier = Modifier.padding(
                         end = 25.dp,
                         bottom = 25.dp
