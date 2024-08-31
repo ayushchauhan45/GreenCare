@@ -83,7 +83,6 @@ fun LikePlantDetailsScreen(
     var isLiked by rememberSaveable { mutableStateOf(false) }
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
-    val context = LocalContext.current
 
     val reminderState = reminderViewModel.state
 
@@ -106,6 +105,7 @@ fun LikePlantDetailsScreen(
         mutableStateOf(0L)
     }
 
+    val context = LocalContext.current
 
     ModalBottomSheetLayout(sheetState = sheetState,
         sheetContent = {
@@ -113,8 +113,8 @@ fun LikePlantDetailsScreen(
                     time = format.format(timeInMillis.value),
                     onTimeClick = {
                         isTimePickerVisible.value = true
-                    },
-                    onClick = {isRepeat->
+                    })
+                    {isRepeat->
                         state.myPlant?.id?.let { id->
                             val reminder = Reminder(
                                 isWatered = false,
@@ -142,8 +142,7 @@ fun LikePlantDetailsScreen(
                             sheetState.hide()
                         }
                     }
-                )
-            }
+        }
         )
         {
 

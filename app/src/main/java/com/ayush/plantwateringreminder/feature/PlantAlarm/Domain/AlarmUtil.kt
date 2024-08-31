@@ -19,7 +19,7 @@ const val REMINDER = "REMINDER"
     }
 
     val pendingIntent = PendingIntent.getBroadcast(
-        context , reminder.reminderTime.toInt() ,intent,
+        context , reminder.id ,intent,
         PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
     )
      val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -44,7 +44,7 @@ const val REMINDER = "REMINDER"
     }
 
     val pendingIntent = PendingIntent.getBroadcast(
-        context , reminder.reminderTime.toInt() ,intent,
+        context , reminder.id ,intent,
         PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
     )
     try {
@@ -63,7 +63,7 @@ const val REMINDER = "REMINDER"
     }
 
     val pendingIntent = PendingIntent.getBroadcast(
-        context , reminder.reminderTime.toInt() ,intent,
+        context , reminder.id ,intent,
         PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
     )
 

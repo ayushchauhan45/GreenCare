@@ -24,9 +24,10 @@ const val DONE = "DONE"
 const val REJECT = "REJECT"
 
 @AndroidEntryPoint
-class ReminderReceiver @Inject constructor(
-     var mediaPlayer: MediaPlayer
-):BroadcastReceiver() {
+class ReminderReceiver:BroadcastReceiver() {
+
+
+    private lateinit var mediaPlayer: MediaPlayer
 
     @Inject
     lateinit var updateReminder: ReminderRepository
@@ -35,11 +36,12 @@ class ReminderReceiver @Inject constructor(
     override  fun onReceive(context: Context, intent: Intent) {
         mediaPlayer = MediaPlayer.create(context, R.raw.alarm)
 
-       val reminderJson =intent.getStringExtra(REMINDER)
+       val reminderJson = intent.getStringExtra(REMINDER)
        val reminder = Gson().fromJson(reminderJson , Reminder::class.java)
 
 
-        val doneIntent  = Intent(context, ReminderReceiver::class.java).apply { putExtra(
+        val doneIntent  = Intent(context, ReminderReceiver::class.java).apply {
+            putExtra(
             REMINDER, reminderJson
         )
             action = DONE
@@ -48,7 +50,7 @@ class ReminderReceiver @Inject constructor(
 
         val donePendingIntent = PendingIntent.getBroadcast(
             context,
-            reminder.reminderTime.toInt(),
+            reminder.id,
             doneIntent,
             PendingIntent.FLAG_IMMUTABLE
         )
@@ -59,7 +61,7 @@ class ReminderReceiver @Inject constructor(
         }
         val rejectPendingIntent = PendingIntent.getBroadcast(
             context,
-            reminder.reminderTime.toInt(),
+            reminder.id,
             rejectIntent,
             PendingIntent.FLAG_IMMUTABLE
         )
@@ -67,7 +69,7 @@ class ReminderReceiver @Inject constructor(
         when(intent.action){
             DONE ->{
                 runBlocking { updateReminder.updateReminder(reminder.copy(isWatered = true)) }
-                cancelAlarm(context , reminder)
+                cancelAlarm(context,reminder)
             }
             REJECT ->{
                 runBlocking { updateReminder.updateReminder(reminder.copy(isWatered = true)) }
@@ -106,13 +108,9 @@ class ReminderReceiver @Inject constructor(
 
                 mediaPlayer.setOnCompletionListener {
                     mediaPlayer.release()
-                    mediaPlayer.start()
                 }
-
+                mediaPlayer.start()
             }
         }
-
-
-
     }
 }
